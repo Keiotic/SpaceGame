@@ -8,7 +8,7 @@ public abstract class ShipInterface : Interactable
     public List<GameObject> engines;
     GameObject player;
     public float activationDistance = 4;
-    public bool busy;
+    public bool busy = false;
 
     public void Setup()
     {
@@ -26,7 +26,11 @@ public abstract class ShipInterface : Interactable
     {
          if(!busy)
          {
-            
+            Activate(playerInterface);
+         }
+         else
+         {
+            Deactivate(playerInterface);
          }
     }
 }
