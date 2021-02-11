@@ -5,32 +5,15 @@ using UnityEngine;
 public abstract class ShipInterface : Interactable
 {
     public PlayerInterface connectedPlayer;
-    public List<GameObject> engines;
-    GameObject player;
-    public float activationDistance = 4;
-    public bool busy = false;
+    public PlayerInterface playerInterface;
+    public bool busy;
 
-    public void Setup()
-    {
-        player = FindObjectOfType<PlayerInterface>().gameObject;
-    }
     public abstract void Activate(PlayerInterface player);
     public abstract void Deactivate(PlayerInterface player);
     public abstract void Input(PlayerInterface player);
 
-    public virtual bool isInteractable()
+    public override bool IsInteractable(PlayerInterface playerInterface)
     {
-        return Vector2.Distance(transform.position, player.transform.position)<activationDistance;
-    }
-    public override void Interact(PlayerInterface playerInterface)
-    {
-         if(!busy)
-         {
-            Activate(playerInterface);
-         }
-         else
-         {
-            Deactivate(playerInterface);
-         }
+        return Vector2.Distance(transform.position, playerInterface.transform.position) < interactionDistance;
     }
 }

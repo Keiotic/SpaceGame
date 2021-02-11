@@ -7,6 +7,7 @@ public class PlayerInterface : MonoBehaviour
 {
     ShipInterface connectedInterface;
     TopDownPlayerController controller;
+    List<Interactable> interactables = new List<Interactable>();
     void Start()
     {
         controller = GetComponent<TopDownPlayerController>();
@@ -33,5 +34,14 @@ public class PlayerInterface : MonoBehaviour
         {
             controller.SetMobility(true);
         }
+    }
+
+    public void AddToInteractableQueue(Interactable element)
+    {
+        interactables.Add(element);
+    }
+    public void RemoveFromInteractableQueue(Interactable element)
+    {
+        interactables.Remove(element);
     }
 }
