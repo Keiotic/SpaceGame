@@ -18,6 +18,10 @@ public class NavInterface : ShipInterface
         {
 
         }
+        if(!playerInterface && FindObjectOfType<PlayerInterface>())
+        {
+            playerInterface = FindObjectOfType<PlayerInterface>();
+        }
     }
     public override void PlayerDeath(PlayerInterface playerInterface)
     {

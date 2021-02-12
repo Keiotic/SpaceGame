@@ -243,8 +243,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactionDistance: 5
+  inRange: 0
   connectedPlayer: {fileID: 0}
-  player: {fileID: 0}
+  playerInterface: {fileID: 0}
   busy: 0
 --- !u!1 &45321615
 GameObject:
@@ -697,6 +698,7 @@ GameObject:
   - component: {fileID: 750078276}
   - component: {fileID: 750078275}
   - component: {fileID: 750078274}
+  - component: {fileID: 750078278}
   - component: {fileID: 750078273}
   - component: {fileID: 750078277}
   m_Layer: 0
@@ -832,6 +834,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.16, y: 0.16}
   m_EdgeRadius: 0
+--- !u!114 &750078278
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 750078272}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e70faea10db0374e88df5c07e4b1aca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1332713377
 GameObject:
   m_ObjectHideFlags: 0
