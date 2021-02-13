@@ -4,13 +4,5 @@ using UnityEngine;
 
 public class SpaceShipHandler : MonoBehaviour
 {
-    void Start()
-    {
-        
-    }
-
-    void Update()
-    {
-        
-    }
+    public List<GameObject> engines;
 }

@@ -20,13 +20,18 @@ public class TopDownPlayerController : MonoBehaviour
 
     public void Update()
     {
+
         Vector2 targetVector = new Vector2();
-        targetVector = Input.GetAxisRaw("Horizontal") * transform.right + Input.GetAxisRaw("Vertical") * transform.up;
+        if (canMove)
+        {
+            targetVector = Input.GetAxisRaw("Horizontal") * transform.right + Input.GetAxisRaw("Vertical") * transform.up;
+        }
         movementVector = Vector2.Lerp(movementVector, targetVector, Time.deltaTime * speedInterpolation);
+
     }
     private void FixedUpdate()
     {
-        if(movementVector != Vector2.zero)
+        if(movementVector != Vector2.zero )
         {
             rigidbody.MovePosition(rigidbody.position + movementSpeed * movementVector * Time.fixedDeltaTime);
         }

@@ -6,7 +6,8 @@ public abstract class ShipInterface : Interactable
 {
     public PlayerInterface connectedPlayer;
     public PlayerInterface playerInterface;
-    public bool busy;
+    protected bool busy;
+    public SpaceShipHandler handler;
 
     public abstract void Activate(PlayerInterface player);
     public abstract void Deactivate(PlayerInterface player);

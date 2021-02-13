@@ -12,12 +12,15 @@ public class NavInterface : ShipInterface
     {
         if(IsInteractable(playerInterface)&&!inRange)
         {
-
+            playerInterface.AddToInteractableQueue(this);
+            inRange = true;
         }
         else if(!IsInteractable(playerInterface)&&inRange)
         {
-
+            playerInterface.RemoveFromInteractableQueue(this);
+            inRange = false;
         }
+
         if(!playerInterface && FindObjectOfType<PlayerInterface>())
         {
             playerInterface = FindObjectOfType<PlayerInterface>();
@@ -26,6 +29,13 @@ public class NavInterface : ShipInterface
     public override void PlayerDeath(PlayerInterface playerInterface)
     {
         Deactivate(playerInterface);
+    }
+    public void ComponentDeath()
+    {
+        if (connectedPlayer)
+        {
+            Deactivate(connectedPlayer);
+        }
     }
     public void Setup()
     {
@@ -39,13 +49,16 @@ public class NavInterface : ShipInterface
     {
         connectedPlayer = player;
         player.SetShipInterface(this);
+        busy = false;
     }
 
     public override void Deactivate(PlayerInterface player)
     {
         connectedPlayer = null;
         player.SetShipInterface(null);
+        busy = false;
     }
+
     public override void Input(PlayerInterface player)
     {
 
@@ -55,10 +68,9 @@ public class NavInterface : ShipInterface
     {
         if (!busy)
         {
+            if(connectedPlayer != playerInterface)
             Activate(playerInterface);
-        }
-        else
-        {
+            else
             Deactivate(playerInterface);
         }
     }
