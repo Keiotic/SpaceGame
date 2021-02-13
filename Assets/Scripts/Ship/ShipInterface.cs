@@ -11,7 +11,7 @@ public abstract class ShipInterface : Interactable
 
     public abstract void Activate(PlayerInterface player);
     public abstract void Deactivate(PlayerInterface player);
-    public abstract void Input(PlayerInterface player);
+    public abstract void Input(PlayerInterface player, Vector2 movement, bool firing);
 
     public override bool IsInteractable(PlayerInterface playerInterface)
     {

@@ -30,6 +30,7 @@ public class PlayerInterface : MonoBehaviour
         {
             Vector2 movementAxis = Input.GetAxisRaw("Horizontal") * transform.right + Input.GetAxisRaw("Vertical") * transform.up;
             bool fireButtonPress = Input.GetButton("Fire");
+            connectedInterface.Input(this, movementAxis, fireButtonPress);
         }
     }
 
