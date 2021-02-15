@@ -4,9 +4,14 @@ using UnityEngine;
 
 public class NavInterface : ShipInterface
 {
-    public void Awake()
+    public List<Engine> engines;
+    public Rigidbody2D rig;
+
+    public override void Initialize(SpaceShipHandler handler)
     {
-        Setup();
+        base.Initialize(handler);
+        this.engines = handler.GetEngines();
+        this.rig = handler.rig;
     }
     public void Update()
     {
@@ -26,10 +31,14 @@ public class NavInterface : ShipInterface
             playerInterface = FindObjectOfType<PlayerInterface>();
         }
     }
+
+
     public override void PlayerDeath(PlayerInterface playerInterface)
     {
         Deactivate(playerInterface);
     }
+
+
     public void ComponentDeath()
     {
         if (connectedPlayer)
@@ -37,19 +46,14 @@ public class NavInterface : ShipInterface
             Deactivate(connectedPlayer);
         }
     }
-    public void Setup()
-    {
-        if (FindObjectOfType<PlayerInterface>())
-        {
-            playerInterface = FindObjectOfType<PlayerInterface>();
-        }
-    }
+
 
     public override void Activate(PlayerInterface player)
     {
         connectedPlayer = player;
         player.SetShipInterface(this);
-        busy = false;
+        busy = true;
+        print("Activate");
     }
 
     public override void Deactivate(PlayerInterface player)
@@ -57,22 +61,46 @@ public class NavInterface : ShipInterface
         connectedPlayer = null;
         player.SetShipInterface(null);
         busy = false;
+        print("DeActivate");
     }
 
-    public override void Input(PlayerInterface player)
+    public override void Input(PlayerInterface player, Vector2 movement, bool firing)
     {
+        if (movement.y > 0)
+        {
+            for (int i = 0; i < engines.Count; i++) {
 
+                if (engines[i].HasThrust())
+                {
+                    rig.AddForce(handler.transform.up * engines[i].GetThrust());
+                    engines[i].Fire();
+                }
+            }
+        }
+        if(movement.x != 0)
+        {
+            for (int i = 0; i < engines.Count; i++)
+            {
+
+                if (engines[i].HasThrust())
+                {
+                    rig.AddTorque(-movement.x*engines[i].torqueForce);
+                    engines[i].Fire();
+                }
+            }
+        }
     }
+
+
 
     public override void Interact(PlayerInterface playerInterface)
     {
-        if (!busy)
-        {
-            if(connectedPlayer != playerInterface)
-            Activate(playerInterface);
-            else
+         if(connectedPlayer == null)
+         Activate(playerInterface);
+         else if(connectedPlayer == playerInterface)
+         {
             Deactivate(playerInterface);
-        }
+         }
     }
 
 }

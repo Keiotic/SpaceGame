@@ -18,9 +18,12 @@ public class CameraFollow : MonoBehaviour
             Vector3 targetVector = new Vector3(lerpVector.x, lerpVector.y, transform.position.z);
             transform.position = targetVector;
 
-            Quaternion targetRotation = target.transform.rotation;
-            Quaternion lerp = Quaternion.Lerp(transform.rotation, targetRotation, Time.deltaTime * interpolationSpeed);
-            transform.rotation = lerp;
+            if (simulateRotation)
+            {
+                Quaternion targetRotation = target.transform.rotation;
+                Quaternion lerp = Quaternion.Lerp(transform.rotation, targetRotation, Time.deltaTime * interpolationSpeed);
+                transform.rotation = lerp;
+            }
         }
     }
 }

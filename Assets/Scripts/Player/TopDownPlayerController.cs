@@ -10,8 +10,8 @@ public class TopDownPlayerController : MonoBehaviour
     private Vector2 movementVector;
     public bool canMove = true;
 
-    private bool onShip = false;
-    private GameObject ship;
+    public GameObject ship;
+    public Vector2 shipOffset;
 
     void Start()
     {
@@ -20,18 +20,21 @@ public class TopDownPlayerController : MonoBehaviour
 
     public void Update()
     {
-
         Vector2 targetVector = new Vector2();
         if (canMove)
         {
             targetVector = Input.GetAxisRaw("Horizontal") * transform.right + Input.GetAxisRaw("Vertical") * transform.up;
         }
         movementVector = Vector2.Lerp(movementVector, targetVector, Time.deltaTime * speedInterpolation);
-
     }
     private void FixedUpdate()
     {
-        if(movementVector != Vector2.zero )
+        if (IsOnShip())
+        {
+            transform.rotation = ship.transform.rotation;
+            rigidbody.velocity = ship.GetComponent<Rigidbody2D>().velocity + movementSpeed * movementVector;
+        }
+        else
         {
             rigidbody.MovePosition(rigidbody.position + movementSpeed * movementVector * Time.fixedDeltaTime);
         }
@@ -39,13 +42,19 @@ public class TopDownPlayerController : MonoBehaviour
 
     public void EnterShip(GameObject ship)
     {
-        transform.parent = ship.transform;
+        this.ship = ship;
     }
 
-    public void LeaveShip ()
+    public void LeaveShip()
     {
-        transform.parent = null;
+     
     }
+
+    public bool IsOnShip ()
+    {
+        return ship != null;
+    }
+
 
     public void SetMobility(bool value)
     {

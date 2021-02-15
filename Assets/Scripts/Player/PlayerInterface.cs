@@ -11,6 +11,7 @@ public class PlayerInterface : MonoBehaviour
     void Start()
     {
         controller = GetComponent<TopDownPlayerController>();
+
     }
 
     void Update()
@@ -28,7 +29,7 @@ public class PlayerInterface : MonoBehaviour
         }
         if(connectedInterface!=null)
         {
-            Vector2 movementAxis = Input.GetAxisRaw("Horizontal") * transform.right + Input.GetAxisRaw("Vertical") * transform.up;
+            Vector2 movementAxis = Input.GetAxisRaw("Horizontal") * Vector2.right + Input.GetAxisRaw("Vertical") * Vector2.up;
             bool fireButtonPress = Input.GetButton("Fire");
             connectedInterface.Input(this, movementAxis, fireButtonPress);
         }
@@ -37,17 +38,25 @@ public class PlayerInterface : MonoBehaviour
     public void Interact()
     {
         Interactable closest = null;
-        for (int i = interactables.Count - 1; i >= 0; i--)
+        if (!connectedInterface)
         {
-            if (closest == null || Vector2.Distance(interactables[i].transform.position, transform.position) < Vector2.Distance(closest.transform.position, transform.position))
+            for (int i = interactables.Count - 1; i >= 0; i--)
             {
-                closest = interactables[i];
+                if (closest == null || Vector2.Distance(interactables[i].transform.position, transform.position) < Vector2.Distance(closest.transform.position, transform.position))
+                {
+                    closest = interactables[i];
+                }
+            }
+            if (closest)
+            {
+                closest.Interact(this);
             }
         }
-        if(closest)
+        else
         {
-            closest.Interact(this);
+            connectedInterface.Interact(this);
         }
+
     }
 
     public void SetShipInterface (ShipInterface sInterface)
