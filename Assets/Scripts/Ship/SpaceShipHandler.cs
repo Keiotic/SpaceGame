@@ -8,6 +8,18 @@ public class SpaceShipHandler : MonoBehaviour
     public Rigidbody2D rig;
     public List<GameObject> players;
 
+    public GameObject ShipRepresentation;
+
+    [System.Serializable]
+    public class ModulePair
+    {
+        public GameObject playerSideObject;
+        public GameObject shipSideObject;
+        public int pairID;
+    }
+
+    public List<ModulePair> modules;
+
     public void Start()
     {
         rig = GetComponent<Rigidbody2D>();
@@ -17,4 +29,5 @@ public class SpaceShipHandler : MonoBehaviour
     {
         return engines;
     }
+
 }

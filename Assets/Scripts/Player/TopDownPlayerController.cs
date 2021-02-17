@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody2D))]
 public class TopDownPlayerController : MonoBehaviour
 {
     public float movementSpeed = 5;
@@ -16,12 +17,7 @@ public class TopDownPlayerController : MonoBehaviour
 
     void Start()
     {
-        if (!rigidbody) rigidbody = this.GetComponent<Rigidbody2D>();
-        footBox = this.GetComponent<BoxCollider2D>();
-        if (IsOnShip())
-        {
-            transform.parent = ship.transform;
-        }
+        rigidbody = GetComponent<Rigidbody2D>();
     }
 
     public void Update()
@@ -40,11 +36,30 @@ public class TopDownPlayerController : MonoBehaviour
             }
         }
         movementVector = Vector2.Lerp(movementVector, targetVector, Time.deltaTime * speedInterpolation);
+        DoAnimation(movementVector);
     }
     private void FixedUpdate()
     {
         SetMovementConstraints();
         DoMovement();
+    }
+
+    public void DoAnimation(Vector2 movement)
+    {
+        if(movement.x < 0 )
+        {
+            SetCharacterXScale(-1);
+        }
+        else if (movement.x > 0) {
+            SetCharacterXScale(1);
+        }
+    }
+
+    public void SetCharacterXScale (int scale)
+    {
+        Vector3 characterScale = transform.localScale;
+        characterScale.x = scale;
+        transform.localScale = characterScale;
     }
 
     public void EnterShip(GameObject ship)
@@ -58,7 +73,7 @@ public class TopDownPlayerController : MonoBehaviour
         {
             transform.rotation = ship.transform.rotation;
         }
-        transform.Translate(movementSpeed*Time.deltaTime*movementVector);
+        rigidbody.MovePosition((Vector2)transform.position + movementVector * Time.deltaTime * movementSpeed);
     }
 
     public void LeaveShip()

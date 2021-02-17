@@ -79,6 +79,8 @@ public class NavInterface : ShipInterface
         }
         if(movement.x != 0)
         {
+
+      
             for (int i = 0; i < engines.Count; i++)
             {
 
