@@ -9,8 +9,12 @@ public class ShipBuilder : MonoBehaviour
     public List<ShipComponent> activeShipParts;
     GridManager grid;
     public ShipComponent selectedTool;
+    public GameObject toolButton;
+    public GameObject toolContainer;
+    private List<Button> toolbuttons = new List<Button>();
     public enum ComponentType
     {
+        none,
         room,
         weapon,
         shield,
@@ -29,29 +33,56 @@ public class ShipBuilder : MonoBehaviour
     
     }
 
-    public void SelectComponentMenu (ComponentType type)
+    public void SelectComponentMenu (int componentType)
     {
-        switch (type)
+        ComponentType type = (ComponentType)componentType;
+        if (type == currentComponent||type == ComponentType.none)
         {
-            case ComponentType.room:
-                
-                break;
-            case ComponentType.weapon:
-
-                break;
-            case ComponentType.shield:
-                
-                break;
-            case ComponentType.engine:
-
-                break;
+            currentComponent = ComponentType.none;
+            ClearButtons();
+        }
+        else
+        {
+            currentComponent = type;
+            ClearButtons();
+            List<ShipComponent> populateType = new List<ShipComponent>();
+            switch (type)
+            {
+                case ComponentType.room:
+                    populateType = new List<ShipComponent>(componentHolder.rooms);
+                    break;
+                case ComponentType.weapon:
+                    populateType = new List<ShipComponent>(componentHolder.weapons);
+                    break;
+                case ComponentType.shield:
+                    populateType = new List<ShipComponent>(componentHolder.shields);
+                    break;
+                case ComponentType.engine:
+                    populateType = new List<ShipComponent>();
+                    break;
+            }
+            PopulateButtons(populateType);
         }
     }
 
-    public void CreateButtons (List<ShipComponent> list)
+    public void ClearButtons ()
     {
-        List<Button> buttons = new List<Button>();
-        foreach(ShipComponent comp : )
+        for(int i = toolbuttons.Count-1; i >= 0; i--)
+        {
+            Destroy(toolbuttons[i].gameObject);
+        }
+        toolbuttons.Clear();
+    }
+
+    public void PopulateButtons (List<ShipComponent> list)
+    {
+        foreach(ShipComponent comp in list)
+        {
+            Button button = GameObject.Instantiate(toolButton).GetComponent<Button>();
+            button.transform.parent = toolContainer.transform;
+            button.transform.GetChild(0).GetComponent<Text>().text = comp.displayname;
+            toolbuttons.Add(button);
+        }
     }
 
 }
