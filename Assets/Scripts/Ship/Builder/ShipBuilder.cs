@@ -6,12 +6,24 @@ using UnityEngine.UI;
 public class ShipBuilder : MonoBehaviour
 {
     public ShipComponents componentHolder;
-    public List<ShipComponent> activeShipParts;
-    GridManager grid;
-    public ShipComponent selectedTool;
-    public GameObject toolButton;
+    private List<ShipComponent> selectedShipParts;
+    private GridManager grid;
+    private ShipComponent selectedTool;
+    private Button selectedToolButton;
+    public GameObject toolButtonPrefab;
     public GameObject toolContainer;
     private List<Button> toolbuttons = new List<Button>();
+    public ButtonColors buttonColors;
+
+
+    [System.Serializable]
+    public class ButtonColors
+    {
+        [Header("Unselected element")]
+        public ColorBlock unselected;
+        [Header("Selected element")]
+        public ColorBlock selected;
+    }
     public enum ComponentType
     {
         none,
@@ -61,6 +73,7 @@ public class ShipBuilder : MonoBehaviour
                     populateType = new List<ShipComponent>();
                     break;
             }
+            selectedShipParts = populateType;
             PopulateButtons(populateType);
         }
     }
@@ -78,11 +91,28 @@ public class ShipBuilder : MonoBehaviour
     {
         foreach(ShipComponent comp in list)
         {
-            Button button = GameObject.Instantiate(toolButton).GetComponent<Button>();
+            Button button = GameObject.Instantiate(toolButtonPrefab).GetComponent<Button>();
             button.transform.parent = toolContainer.transform;
             button.transform.GetChild(0).GetComponent<Text>().text = comp.displayname;
+            button.onClick.AddListener(delegate {SetActiveTool(comp, button);});
+            
             toolbuttons.Add(button);
         }
     }
 
+    public void SetActiveTool (ShipComponent component, Button button)
+    {
+        if(component == selectedTool)
+        {
+            selectedToolButton.colors = buttonColors.unselected;
+            selectedTool = null;
+            selectedToolButton = null;
+        }
+        else
+        {
+            selectedTool = component;
+            selectedToolButton = button;
+            button.colors = buttonColors.selected;
+        }
+    }
 }
