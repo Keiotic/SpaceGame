@@ -7,7 +7,7 @@ public class TopDownPlayerController : MonoBehaviour
 {
     public float movementSpeed = 5;
     public float speedInterpolation = 10;
-    private Rigidbody2D rigidbody;
+    private new Rigidbody2D rigidbody = new Rigidbody2D();
     private Vector2 movementVector;
     private Vector4 movementConstraints;
     private BoxCollider2D footBox;

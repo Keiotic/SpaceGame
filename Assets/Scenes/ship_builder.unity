@@ -1202,11 +1202,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   componentHolder: {fileID: 11400000, guid: de4d9e8195efc8441b6e79d2c5aee1c0, type: 2}
-  activeShipParts: []
-  selectedTool: {fileID: 0}
-  toolButton: {fileID: 4461422256785053448, guid: a1aac11fff268b0428a4855be858560d,
+  toolButtonPrefab: {fileID: 4461422256785053448, guid: a1aac11fff268b0428a4855be858560d,
     type: 3}
   toolContainer: {fileID: 1025540926}
+  buttonColors:
+    unselected:
+      m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+      m_HighlightedColor: {r: 1, g: 1, b: 1, a: 1}
+      m_PressedColor: {r: 0.6698113, g: 0.6698113, b: 0.6698113, a: 1}
+      m_SelectedColor: {r: 1, g: 1, b: 1, a: 1}
+      m_DisabledColor: {r: 0, g: 0, b: 0, a: 1}
+      m_ColorMultiplier: 1
+      m_FadeDuration: 0
+    selected:
+      m_NormalColor: {r: 0.735849, g: 0.735849, b: 0.735849, a: 1}
+      m_HighlightedColor: {r: 0.7372549, g: 0.7372549, b: 0.7372549, a: 1}
+      m_PressedColor: {r: 0.2735849, g: 0.2735849, b: 0.2735849, a: 1}
+      m_SelectedColor: {r: 0.7372549, g: 0.7372549, b: 0.7372549, a: 1}
+      m_DisabledColor: {r: 0, g: 0, b: 0, a: 1}
+      m_ColorMultiplier: 1
+      m_FadeDuration: 0
 --- !u!4 &1597983995
 Transform:
   m_ObjectHideFlags: 0

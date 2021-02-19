@@ -39,8 +39,21 @@ public class GridManager : MonoBehaviour
         
     }
 
-    public Vector2 GetMousePosition ()
+    public Vector2 GetMousePositionInGrid ()
     {
-        return Vector2.zero;
+        Vector2 mousePositionInWorld = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        mousePositionInWorld /= tileSize;
+        mousePositionInWorld.x = Mathf.RoundToInt(mousePositionInWorld.x);
+        mousePositionInWorld.y = Mathf.RoundToInt(mousePositionInWorld.y);
+        return mousePositionInWorld;
+    }
+
+    public bool VectorIsInGrid (Vector2 input)
+    {
+        if(Mathf.Abs(input.x)<=rows/2&&Mathf.Abs(input.y) <= cols / 2)
+        {
+            return true;
+        }
+        return false;
     }
 }

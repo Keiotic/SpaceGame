@@ -10,6 +10,7 @@ public class ShipBuilder : MonoBehaviour
     private GridManager grid;
     private ShipComponent selectedTool;
     private Button selectedToolButton;
+    public Image ghost;
     public GameObject toolButtonPrefab;
     public GameObject toolContainer;
     private List<Button> toolbuttons = new List<Button>();
@@ -42,7 +43,11 @@ public class ShipBuilder : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-    
+        Debug.Log(grid.GetMousePositionInGrid());
+        if(selectedTool != null)
+        {
+
+        }
     }
 
     public void SelectComponentMenu (int componentType)
@@ -92,7 +97,7 @@ public class ShipBuilder : MonoBehaviour
         foreach(ShipComponent comp in list)
         {
             Button button = GameObject.Instantiate(toolButtonPrefab).GetComponent<Button>();
-            button.transform.parent = toolContainer.transform;
+            button.transform.SetParent(toolContainer.transform);
             button.transform.GetChild(0).GetComponent<Text>().text = comp.displayname;
             button.onClick.AddListener(delegate {SetActiveTool(comp, button);});
             
@@ -113,6 +118,7 @@ public class ShipBuilder : MonoBehaviour
             selectedTool = component;
             selectedToolButton = button;
             button.colors = buttonColors.selected;
+            Debug.Log(selectedTool.displayname);
         }
     }
 }
