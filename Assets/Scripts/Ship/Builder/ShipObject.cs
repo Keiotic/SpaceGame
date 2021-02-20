@@ -5,21 +5,23 @@ using UnityEngine;
 [System.Serializable]
 public class ShipObject
 {
-    public List<List<ShipComponent_Room>> rooms;
-    public List<List<ShipComponent_Mechanism>> mechanisms;
+    public ShipComponent_Room[,] rooms;
+    public ShipComponent_Mechanism[,] mechanisms;
     
 
     public ShipObject (int width, int height)
     {
-        List<ShipComponent> innerlist = new List<ShipComponent>(height);
-        for (int i = 0; i < height; i++)
-        {
-            innerlist.Add(null);
-        }
-        List<List<ShipComponent>> outerlist = new List<List<ShipComponent>>();
-        for(int i = 0; i < width; i++)
-        {
-            outerlist.Add(innerlist);
-        }
+        rooms = new ShipComponent_Room[width, height];
+        mechanisms = new ShipComponent_Mechanism[width, height];
+    }
+
+    public void SetRoom(Vector2 pos, ShipComponent_Room room)
+    {
+        rooms[(int)pos.x, (int)pos.y] = room;
+    }
+
+    public void SetMechanism(Vector2 pos, ShipComponent_Mechanism mech)
+    {
+        mechanisms[(int)pos.x, (int)pos.y] = mech;
     }
 }

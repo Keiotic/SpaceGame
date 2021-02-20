@@ -1202,7 +1202,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   componentHolder: {fileID: 11400000, guid: de4d9e8195efc8441b6e79d2c5aee1c0, type: 2}
-  ghost: {fileID: 0}
+  ghost: {fileID: 5694196294423919808, guid: 63ae73ca32499e64d87c0ad1b53c2452, type: 3}
   toolButtonPrefab: {fileID: 4461422256785053448, guid: a1aac11fff268b0428a4855be858560d,
     type: 3}
   toolContainer: {fileID: 1025540926}

@@ -19,11 +19,13 @@ public class ShipBuilder : MonoBehaviour
     private Button selectedToolButton;
 
     private ShipObject ship;
-    private ShipObjectRepresentation representation;
-    private class ShipObjectRepresentation
+    public ShipObjectRepresentation representation;
+
+    [System.Serializable]
+    public class ShipObjectRepresentation
     {
-        public List<List<ShipComponent_Room>> rooms;
-        public List<List<ShipComponent_Mechanism>> mechanisms;
+        public List<List<GameObject>> rooms;
+        public List<List<GameObject>> mechanisms;
     }
 
     [System.Serializable]
@@ -52,6 +54,11 @@ public class ShipBuilder : MonoBehaviour
         ghost.SetActive(false);
         ghostRenderer = ghost.GetComponent<SpriteRenderer>();
         ship = new ShipObject(grid.cols, grid.rows);
+        GameObject defaultGameObject = null;
+        List<GameObject> emptyInnerPopulation = PopulateEmptyList(grid.rows, defaultGameObject);
+        List<List<GameObject>> emptyOuterPopulation = PopulateEmptyList(grid.cols, emptyInnerPopulation);
+        representation.rooms = emptyOuterPopulation;
+        representation.mechanisms = emptyOuterPopulation;
     }
 
     // Update is called once per frame
@@ -61,7 +68,7 @@ public class ShipBuilder : MonoBehaviour
         ghost.SetActive(grid.VectorIsInGrid(mousePos) && selectedTool != null);
         if (selectedTool != null)
         {
-            Vector2 ghostPos = grid.GetMousePositionInGrid() * grid.GetCellSize();
+            Vector2 ghostPos = grid.GetMouseToGridWorldPosition();
             ghost.transform.position = ghostPos;
             if (Input.GetButtonDown("Fire"))
             {
@@ -160,9 +167,14 @@ public class ShipBuilder : MonoBehaviour
         {
             if (selectedTool is ShipComponent_Room)
             {
+                print("TrynasetRoom" + pos.x + "," + pos.y);
                 if (!LayerPosHasElement(ship.rooms, pos))
                 {
-
+                    ship.SetRoom(pos, (ShipComponent_Room)selectedTool);
+                    Vector2 worldPos = grid.GetWorldPositionFromGrid(pos);
+                    GameObject gObject = Instantiate(selectedTool.inner, worldPos, transform.rotation);
+                    representation.rooms[(int)pos.x][(int)pos.y] = gObject;
+                    gObject.transform.position = worldPos;
                 }
             }
             if (selectedTool is ShipComponent_Mechanism)
@@ -172,9 +184,9 @@ public class ShipBuilder : MonoBehaviour
         }
     }
 
-    public bool LayerPosHasElement<T>(List<List<T>> layer, Vector2 wantedposition)
+    public bool LayerPosHasElement<T>(T[,] layer, Vector2 wantedposition)
     {
-        if(layer[(int)wantedposition.x][(int)wantedposition.y]==null)
+        if(layer[(int)wantedposition.x, (int)wantedposition.y] == null)
         {
             return false;
         }
@@ -192,5 +204,13 @@ public class ShipBuilder : MonoBehaviour
 
         }
     }
-
+    public List<T> PopulateEmptyList<T> (int size, T defaultValue)
+    {
+        List<T> list = new List<T>();
+        for(int i = 0; i < size; i++)
+        {
+            list.Add(defaultValue);
+        }
+        return list;
+    }
 }
