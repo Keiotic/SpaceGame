@@ -6,7 +6,8 @@ using UnityEngine;
 [System.Serializable]
 public class ShipComponents : ScriptableObject
 {
-    public List<GameObject> engines;
+    public List<ShipComponent_Engine> engines;
+    public List<ShipComponent_Room> exteriors;
     public List<ShipComponent_Room> rooms;
     public List<ShipComponent_Gun> weapons;
     public List<ShipComponent_Shield> shields;

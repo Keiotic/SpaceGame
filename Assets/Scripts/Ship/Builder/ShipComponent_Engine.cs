@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShipComponent_Shield : ShipComponent_Mechanism  
+[System.Serializable]
+public class ShipComponent_Engine : ShipComponent_Room
 {
+
 }

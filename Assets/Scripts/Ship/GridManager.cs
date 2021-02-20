@@ -56,4 +56,9 @@ public class GridManager : MonoBehaviour
         }
         return false;
     }
+
+    public float GetCellSize ()
+    {
+        return tileSize;
+    }
 }
