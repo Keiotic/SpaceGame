@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b9a8c6184a3cbc4786c76cdb6a5d5e3, type: 3}
-  m_Name: standardRoom 1
+  m_Name: navRoom
   m_EditorClassIdentifier: 
-  displayname: Plain room
+  displayname: navRoom
   description: 
   inner: {fileID: 1923984002906343609, guid: 13d2e0eb1ab674c409df58449e696e6c, type: 3}
   outer: {fileID: 1923984002906343609, guid: 93be5408c9396be488a70134ea2cf992, type: 3}

@@ -1223,6 +1223,9 @@ MonoBehaviour:
       m_DisabledColor: {r: 0, g: 0, b: 0, a: 1}
       m_ColorMultiplier: 1
       m_FadeDuration: 0
+  ghostColors:
+    validColor: {r: 0.71488965, g: 0.990566, b: 0.76912105, a: 0.6039216}
+    invalidColor: {r: 1, g: 0.65999997, b: 0.65999997, a: 0.6}
 --- !u!4 &1597983995
 Transform:
   m_ObjectHideFlags: 0
@@ -1249,8 +1252,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a1cb92fe981c14dade04e054d61bef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rows: 9
-  cols: 9
+  rows: 13
+  cols: 13
   tileSize: 32
   gridRef: {fileID: 5694196294423919808, guid: b2bd1c27742b300419ffb395ebaa3046, type: 3}
 --- !u!1 &1689355694
