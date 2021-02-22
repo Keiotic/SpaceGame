@@ -6,5 +6,11 @@ using UnityEngine;
 [System.Serializable]
 public class ShipComponent_Room : ShipComponent 
 {
-    
+    public enum WallType
+    {
+        open_wall,
+        wall,
+        none
+    }
+    public WallType[] walls = new WallType[4] {WallType.open_wall, WallType.open_wall, WallType.open_wall, WallType.open_wall};
 }
