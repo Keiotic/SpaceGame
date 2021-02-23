@@ -18,3 +18,4 @@ MonoBehaviour:
   outer: {fileID: 1923984002906343609, guid: 93be5408c9396be488a70134ea2cf992, type: 3}
   position: {x: 0, y: 0}
   size: {x: 1, y: 1}
+  walls: 00000000000000000000000000000000
