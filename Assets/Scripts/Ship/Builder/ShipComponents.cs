@@ -12,5 +12,6 @@ public class ShipComponents : ScriptableObject
     public List<ShipComponent_Gun> weapons;
     public List<ShipComponent_Shield> shields;
     public List<GameObject> misc;
+    public bool[] requiredConnections = new bool[4];
 }
 
