@@ -21,3 +21,5 @@ MonoBehaviour:
   weapons: []
   shields: []
   misc: []
+  walls:
+  - {fileID: 2889191919902360121, guid: 4ff6ab6032e7b8a4ab22db043228aef2, type: 3}

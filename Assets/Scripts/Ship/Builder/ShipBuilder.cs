@@ -141,7 +141,7 @@ public class ShipBuilder : MonoBehaviour
             Button button = GameObject.Instantiate(toolButtonPrefab).GetComponent<Button>();
             button.transform.SetParent(toolContainer.transform);
             button.transform.GetChild(0).GetComponent<Text>().text = comp.displayname;
-            button.onClick.AddListener(delegate { SetActiveTool(comp, button); });
+            button.onClick.AddListener(delegate {SetActiveTool(comp, button);});
 
             toolbuttons.Add(button);
         }
@@ -182,6 +182,8 @@ public class ShipBuilder : MonoBehaviour
                     GameObject gObject = Instantiate(selectedTool.inner, worldPos, transform.rotation);
                     representation.rooms[(int)pos.x,(int)pos.y] = gObject;
                     gObject.transform.position = worldPos;
+                    SetRoomWalls(pos);
+                    SetAdjacentRoomWalls(pos);
                 }
             }
             else if (selectedTool is ShipComponent_Mechanism)
@@ -190,6 +192,83 @@ public class ShipBuilder : MonoBehaviour
             }
         }
     }
+
+    public void SetAdjacentRoomWalls(Vector2 pos)
+    {
+        int right = (int)pos.x;
+        int up = (int)pos.y;
+        GameObject roomObject = representation.rooms[right, up];
+
+        if (up + 1 < grid.rows - 1 && ship.GetRoom(new Vector2(right, up + 1)) != null)
+        {
+            SetRoomWalls(new Vector2(right, up + 1));
+        }
+        if (right + 1 < grid.cols - 1 && ship.GetRoom(new Vector2(right + 1, up)) != null)
+        {
+            SetRoomWalls(new Vector2(right+1, up));
+        }
+        if (up - 1 > 0 && ship.GetRoom(new Vector2(right, up - 1)) != null)
+        {
+            SetRoomWalls(new Vector2(right, up-1));
+        }
+        if (right - 1 > 0 && ship.GetRoom(new Vector2(right - 1, up)) != null)
+        {
+            SetRoomWalls(new Vector2(right-1, up));
+        }
+    }
+
+    public void SetRoomWalls(Vector2 pos)
+    {
+        int right = (int)pos.x;
+        int up = (int)pos.y;
+        ShipComponent_Room room = ship.GetRoom(new Vector2(right, up));
+        GameObject roomObject = representation.rooms[right, up];
+        ShipComponent_Room.WallType[] walls = new ShipComponent_Room.WallType[4];
+        for(int i = 0; i < roomObject.transform.childCount; i++)
+        {
+            Destroy(roomObject.transform.GetChild(i).gameObject);
+        }
+        if(up+1 > grid.rows-1||ship.GetRoom(new Vector2(right, up+1)) == null)
+        {
+            walls[0] = ShipComponent_Room.WallType.wall;
+            CreateWallRepresentation(roomObject, new Vector2(0, 1));
+        }
+        if (right+1 > grid.cols-1|| ship.GetRoom(new Vector2(right+1, up)) == null)
+        {
+            walls[1] = ShipComponent_Room.WallType.wall;
+            GameObject wall = CreateWallRepresentation(roomObject, new Vector2(1, 0));
+            Vector3 rotation = wall.transform.rotation.eulerAngles;
+            rotation.z += 90;
+            Quaternion q = Quaternion.Euler(rotation);
+            wall.transform.rotation = q;
+        }
+        if (up-1 < 0||ship.GetRoom(new Vector2(right, up-1)) == null)
+        {
+            walls[2] = ShipComponent_Room.WallType.wall;
+            CreateWallRepresentation(roomObject, new Vector2(0, -1));
+        }
+        if (right-1 < 0 || ship.GetRoom(new Vector2(right-1, up)) == null)
+        {
+            walls[3] = ShipComponent_Room.WallType.wall;
+            GameObject wall = CreateWallRepresentation(roomObject, new Vector2(-1, 0));
+            Vector3 rotation = wall.transform.rotation.eulerAngles;
+            rotation.z += 90;
+            Quaternion q = Quaternion.Euler(rotation);
+            wall.transform.rotation = q;
+        }
+        ship.SetWalls(room, walls);
+    }
+
+    public GameObject CreateWallRepresentation (GameObject room, Vector2 position) 
+    {
+        GameObject wall = Instantiate(componentHolder.walls[0], room.transform);
+        Vector2 pos = room.transform.position;
+        pos.x += position.x * 16;
+        pos.y += position.y * 16;
+        wall.transform.position = pos;
+        return wall;
+    }
+
 
     public bool LayerPosHasElement<T>(T[,] layer, Vector2 wantedposition)
     {
@@ -220,6 +299,7 @@ public class ShipBuilder : MonoBehaviour
                 ship.rooms[(int)pos.x, (int)pos.y] = null;
                 Destroy(representation.rooms[(int)pos.x,(int)pos.y]);
                 representation.rooms[(int)pos.x,(int)pos.y] = null;
+                SetAdjacentRoomWalls(pos);
             }
         }
     }

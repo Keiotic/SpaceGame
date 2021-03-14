@@ -11,4 +11,5 @@ public abstract class ShipComponent : ScriptableObject
     public GameObject outer;
     public Vector2 position;
     public Vector2 size = new Vector2(1, 1);
+    public bool[] requiredConnections = new bool[4];
 }

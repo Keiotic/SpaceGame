@@ -31,4 +31,15 @@ public class ShipObject
     {
         engines[(int)pos.x, (int)pos.y] = engine;
     }
+
+    public void SetWalls(ShipComponent_Room room, ShipComponent_Room.WallType[] walls)
+    {
+        room.walls = walls;
+    }
+
+    public ShipComponent_Room GetRoom(Vector2 pos)
+    {
+        if(rooms[(int)pos.x, (int)pos.y]) return rooms[(int)pos.x, (int)pos.y];
+        else return null;
+    }
 }
