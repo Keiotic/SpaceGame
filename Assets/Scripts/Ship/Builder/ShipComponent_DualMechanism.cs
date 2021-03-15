@@ -4,7 +4,7 @@ using UnityEngine;
 
 [CreateAssetMenu(fileName = "ShipComponent_Mechanism", menuName = "data/shipdata/components/Mechanism")]
 [System.Serializable]
-public abstract class ShipComponent_Mechanism : ShipComponent 
+public abstract class ShipComponent_DualMechanism : ShipComponent 
 {
     public GameObject auxObject;
     public Vector2 auxPosition;

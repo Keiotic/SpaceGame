@@ -11,7 +11,7 @@ public class ShipComponents : ScriptableObject
     public List<ShipComponent_Room> rooms;
     public List<ShipComponent_Gun> weapons;
     public List<ShipComponent_Shield> shields;
-    public List<GameObject> misc;
+    public List<ShipComponent_Misc> misc;
     public List<GameObject> walls;
 }
 

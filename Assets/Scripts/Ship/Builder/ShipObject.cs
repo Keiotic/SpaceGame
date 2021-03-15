@@ -8,7 +8,7 @@ public class ShipObject
     public ShipComponent_Room[,] rooms;
     public ShipComponent_Mechanism[,] mechanisms;
     public ShipComponent_Engine[,] engines;
-
+    public ShipComponent_NavChair navigationalUnit;
 
     public ShipObject (int width, int height)
     {
@@ -41,5 +41,15 @@ public class ShipObject
     {
         if(rooms[(int)pos.x, (int)pos.y]) return rooms[(int)pos.x, (int)pos.y];
         else return null;
+    }
+
+    public bool HasNavUnit()
+    {
+        return navigationalUnit != null;
+    }
+
+    public Vector2 GetNavPosition()
+    {
+        return navigationalUnit.position;
     }
 }

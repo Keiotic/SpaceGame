@@ -15,11 +15,10 @@ MonoBehaviour:
   engines: []
   exteriors: []
   rooms:
-  - {fileID: 11400000, guid: 4be1bf9789b806542b08e875a2cca150, type: 2}
   - {fileID: 11400000, guid: 00ecd640fd66e7e4ebbd0322f96d53ad, type: 2}
-  - {fileID: 11400000, guid: 01724e0f2fea37143ac08677e8036c28, type: 2}
   weapons: []
   shields: []
   misc: []
   walls:
   - {fileID: 2889191919902360121, guid: 4ff6ab6032e7b8a4ab22db043228aef2, type: 3}
+  nav: {fileID: 0}

@@ -22,6 +22,8 @@ public class ShipBuilder : MonoBehaviour
     public ShipObjectRepresentation representation;
     public GhostColors ghostColors;
 
+    public bool hasNavUnit;
+
     [System.Serializable]
     public class ShipObjectRepresentation
     {
@@ -52,7 +54,8 @@ public class ShipBuilder : MonoBehaviour
         weapon,
         shield,
         engine,
-        exterior
+        exterior,
+        control
     }
     ComponentType currentComponent;
     void Start()
@@ -65,7 +68,7 @@ public class ShipBuilder : MonoBehaviour
         ship = new ShipObject(grid.cols, grid.rows);
         representation.rooms = new GameObject[grid.cols, grid.rows];
         representation.mechanisms = new GameObject[grid.cols, grid.rows];
-
+        hasNavUnit = ship.HasNavUnit();
     }
 
     // Update is called once per frame
@@ -118,6 +121,9 @@ public class ShipBuilder : MonoBehaviour
                     break;
                 case ComponentType.exterior:
                     populateType = new List<ShipComponent>(componentHolder.exteriors);
+                    break;
+                case ComponentType.control:
+                    populateType = new List<ShipComponent>(componentHolder.misc);
                     break;
             }
             selectedShipParts = populateType;
@@ -190,6 +196,13 @@ public class ShipBuilder : MonoBehaviour
             {
 
             }
+            else if (selectedTool is ShipComponent_Misc)
+            {
+                if (!LayerPosHasElement(ship.mechanisms, pos)&&!)
+                {
+
+                }
+            }
         }
     }
 
@@ -199,19 +212,19 @@ public class ShipBuilder : MonoBehaviour
         int up = (int)pos.y;
         GameObject roomObject = representation.rooms[right, up];
 
-        if (up + 1 < grid.rows - 1 && ship.GetRoom(new Vector2(right, up + 1)) != null)
+        if (up + 1 <= grid.rows - 1 && ship.GetRoom(new Vector2(right, up + 1)) != null)
         {
             SetRoomWalls(new Vector2(right, up + 1));
         }
-        if (right + 1 < grid.cols - 1 && ship.GetRoom(new Vector2(right + 1, up)) != null)
+        if (right + 1 <= grid.cols - 1 && ship.GetRoom(new Vector2(right + 1, up)) != null)
         {
             SetRoomWalls(new Vector2(right+1, up));
         }
-        if (up - 1 > 0 && ship.GetRoom(new Vector2(right, up - 1)) != null)
+        if (up - 1 >= 0 && ship.GetRoom(new Vector2(right, up - 1)) != null)
         {
             SetRoomWalls(new Vector2(right, up-1));
         }
-        if (right - 1 > 0 && ship.GetRoom(new Vector2(right - 1, up)) != null)
+        if (right - 1 >= 0 && ship.GetRoom(new Vector2(right - 1, up)) != null)
         {
             SetRoomWalls(new Vector2(right-1, up));
         }

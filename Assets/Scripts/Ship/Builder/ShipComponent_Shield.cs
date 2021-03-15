@@ -2,6 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShipComponent_Shield : ShipComponent_Mechanism  
+public class ShipComponent_Shield : ShipComponent_DualMechanism  
 {
 }
